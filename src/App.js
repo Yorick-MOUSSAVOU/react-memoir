@@ -1,49 +1,31 @@
 import React from "react";
 import Todo from "./components/Todo.js";
+import Form from "./components/Form.js";
+import FilterButton from "./components/FliterButton.js";
 
 
 
 
 function App(props) {
+
+  function onSubmit (name){
+    console.log(name)
+  }
+
   const TaskList = props.tasks.map((task) => 
     <Todo id={task.id} name={task.name} completed={task.completed} key={task.id}/>
+  );
+
+  const PrendreList = props.prends.map((prend) => 
+    <FilterButton name={prend.name} id={prend.id} pressed={prend.pressed} key={prend.id}/>
   )
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <form>
-        <h2 className="label-wrapper">
-          <label htmlFor="new-todo-input" className="label__lg">
-            Qu'y a-t-il à faire&nbsp;?
-          </label>
-        </h2>
-        <input
-          type="text"
-          id="new-todo-input"
-          className="input input__lg"
-          name="text"
-          autoComplete="off"
-        />
-        <button type="submit" className="btn btn__primary btn__lg">
-          Ajouter
-        </button>
-      </form>
+      <Form onSubmit={onSubmit}/>
       <div className="filters btn-group stack-exception">
-        <button type="button" className="btn toggle-btn" aria-pressed="true">
-          <span className="visually-hidden">Montrer </span>
-          <span>Toutes</span>
-          <span className="visually-hidden"> les tâches</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="true">
-          <span className="visually-hidden">Montrer </span>
-          <span className="visually-hidden">les tâches </span>
-          <span>Actives</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="false">
-          <span className="visually-hidden">Montrer </span>
-          <span className="visually-hidden">les tâches </span>
-          <span>Terminées</span>
-        </button>
+        {PrendreList}
       </div>
       <h2 id="list-heading">3 tâches restantes</h2>
       <ul
