@@ -9,13 +9,29 @@ import FilterButton from "./components/FliterButton.js";
 
 function App(props) {
 
-  const [tasks, SetTasks] = useState(props.tasks)
+  const [tasks, setTasks] = useState(props.tasks)
 
+
+  //Ajout de taches
   function addTask(name){
     const newTask = {id:`todo-${nanoid()}`, name, completed:false};
-    SetTasks([...tasks, newTask]);
+    setTasks([...tasks, newTask]);
     // console.log(name);
   }
+
+  function toggleTaskCompleted(id) {
+  const updatedTasks = tasks.map((task) => {
+    // si cette tâche possède le même identifiant que la tâche éditée
+    if (id === task.id) {
+      // on utilise la décomposition objet afin
+      // de construire un nouvel objet dont la
+      // propriété `completed` est l'inverse
+      return { ...task, completed: !task.completed };
+    }
+    return task;
+  });
+  setTasks(updatedTasks);
+}
 
   const TaskList = tasks.map((task) => 
     <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} toggleTaskCompleted={toggleTaskCompleted}/>
@@ -28,11 +44,6 @@ function App(props) {
   const PrendreList = props.prends.map((prend) => 
     <FilterButton name={prend.name} id={prend.id} pressed={prend.pressed} key={prend.id}/>
   )
-
-  function toggleTaskCompleted(id) {
-  console.log(tasks[0]);
-}
-
 
   return (
     <div className="todoapp stack-large">
