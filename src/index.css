@@ -227,6 +227,7 @@ body {
 }
 /* Todo item styles */
 .todo {
+  /* voir */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -281,6 +282,7 @@ body {
   margin-bottom: 0;
   padding: 8px 15px 5px;
   cursor: pointer;
+  /* voir */
   touch-action: manipulation;
 }
 .c-cb > label::before {

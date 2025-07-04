@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import {nanoid} from "nanoid"
 import Todo from "./components/Todo.js";
 import Form from "./components/Form.js";
 import FilterButton from "./components/FliterButton.js";
@@ -8,26 +9,39 @@ import FilterButton from "./components/FliterButton.js";
 
 function App(props) {
 
-  function onSubmit (name){
-    console.log(name)
+  const [tasks, SetTasks] = useState(props.tasks)
+
+  function addTask(name){
+    const newTask = {id:`todo-${nanoid()}`, name, completed:false};
+    SetTasks([...tasks, newTask]);
+    // console.log(name);
   }
 
-  const TaskList = props.tasks.map((task) => 
-    <Todo id={task.id} name={task.name} completed={task.completed} key={task.id}/>
+  const TaskList = tasks.map((task) => 
+    <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} toggleTaskCompleted={toggleTaskCompleted}/>
   );
+
+  //Compter les taches
+  const taskWord = TaskList.length !== 1 ? "taches restantes": "tache restante";
+  const headingText = `${TaskList.length} ${taskWord}`;
 
   const PrendreList = props.prends.map((prend) => 
     <FilterButton name={prend.name} id={prend.id} pressed={prend.pressed} key={prend.id}/>
   )
 
+  function toggleTaskCompleted(id) {
+  console.log(tasks[0]);
+}
+
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <Form onSubmit={onSubmit}/>
+      <Form onSubmit={addTask}/>
       <div className="filters btn-group stack-exception">
         {PrendreList}
       </div>
-      <h2 id="list-heading">3 tâches restantes</h2>
+      <h2 id="list-heading">{headingText}</h2>
       <ul
         // role="list"
         className="todo-list stack-large stack-exception"
@@ -35,6 +49,24 @@ function App(props) {
       >
         {TaskList}
       </ul>
+
+      <button type="submit" onClick={() => alert("J'ai réussi !")}>
+        Clickb sur ce bouton et tu auras réussie !
+      </button>
+
+      <form type="submit" >
+        <label htmlFor="calend">Entrez votre date de naissance</label>
+        <input type="date" id="calend" />
+      </form>
+      <form type="submit" >
+        <label htmlFor="calend">Entrez votre date de naissance</label>
+        <input type="checkbox" id="calend" />
+      </form>
+      <form type="submit" >
+        <label htmlFor="calend">Entrez votre choi</label>
+        <input type="select" id="calend" />
+          
+      </form>
     </div>
   );
 }
