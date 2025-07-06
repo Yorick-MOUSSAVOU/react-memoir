@@ -33,8 +33,13 @@ function App(props) {
   setTasks(updatedTasks);
 }
 
+function deleteTask(id) {
+  console.log(id);
+}
+
+
   const TaskList = tasks.map((task) => 
-    <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} toggleTaskCompleted={toggleTaskCompleted}/>
+    <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} toggleTaskCompleted={toggleTaskCompleted} deleteTask={deleteTask}/>
   );
 
   //Compter les taches
